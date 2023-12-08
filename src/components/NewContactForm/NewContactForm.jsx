@@ -1,4 +1,3 @@
-import { nanoid } from 'nanoid';
 import { Form, FormWrapper } from './NewContactForm.styled';
 import PropTypes from 'prop-types';
 import { useState } from 'react';
@@ -26,7 +25,7 @@ export function NewContactForm({ contacts, onSubmit }) {
       alert(`${name} is already in contacts!`);
       return;
     }
-    onSubmit(nanoid(), name, phone);
+    onSubmit(crypto.randomUUID(), name, phone);
     setName('');
     setPhone('');
   }

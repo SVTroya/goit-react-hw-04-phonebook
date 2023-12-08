@@ -17,11 +17,11 @@ export function App() {
   }, [contacts]);
 
   function onSubmitForm(id, name, phone) {
-    setContacts([...contacts, { id, name, phone }]);
+    setContacts(prev => [...prev, { id, name, phone }]);
   }
 
   function onRemoveContact(id) {
-    setContacts(contacts.filter(contactInfo => contactInfo.id !== id));
+    setContacts(prev => prev.filter(contactInfo => contactInfo.id !== id));
   }
 
   return (
