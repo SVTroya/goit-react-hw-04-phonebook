@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { ImBin } from 'react-icons/im';
 
 export function Contact({contact: {id, name, phone}, onRemoveContact}) {
-
   return (
     <>
       <Name>{name}</Name>

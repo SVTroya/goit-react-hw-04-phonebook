@@ -1,49 +1,44 @@
-import { Component } from 'react';
-
 import { Contact } from '../Contact/Contact';
 import PropTypes from 'prop-types';
 import { HeaderContainer, ListWrapper } from './ListOfContacts.styled';
 import { Filter } from '../Filter/Filter';
+import { useState } from 'react';
 
-export class ListOfContacts extends Component {
+ListOfContacts.propTypes = {
+  contacts: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string,
+      name: PropTypes.string,
+      phone: PropTypes.string,
+    }),
+  ),
+  onRemoveContact: PropTypes.func,
+};
 
-  state = {
-    filter: '',
-  };
+export function ListOfContacts({ contacts, onRemoveContact }) {
 
-  static propTypes = {
-    contacts: PropTypes.arrayOf(
-      PropTypes.shape({
-        id: PropTypes.string,
-        name: PropTypes.string,
-        phone: PropTypes.string,
-      }),
-    ),
-    onRemoveContact: PropTypes.func,
-  };
+  const [filterValue, setFilterValue] = useState('');
 
-  getContactsItems(contacts, filter) {
+  function onFilterInputChange(value) {
+    setFilterValue(value)
+  }
+
+  function getContactsItems(contacts, filter) {
     return contacts.filter(contact => contact.name.toLowerCase().includes(filter.toLowerCase()))
       .map(contact => (
         <li key={contact.id}>
-          <Contact contact={contact} onRemoveContact={this.props.onRemoveContact}/>
+          <Contact contact={contact} onRemoveContact={onRemoveContact} />
         </li>
       ));
   }
 
-  onInputChange = (inputName, value) => {
-    this.setState({ [inputName]: value });
-  };
-
-  render() {
-    return (
-      <ListWrapper>
-        <HeaderContainer><h3>Contacts</h3>
-          <Filter filter={this.state.filter} onChange={this.onInputChange} /></HeaderContainer>
-        <ul>
-          {this.getContactsItems(this.props.contacts, this.state.filter)}
-        </ul>
-      </ListWrapper>
-    );
-  }
+  return (
+    <ListWrapper>
+      <HeaderContainer><h3>Contacts</h3>
+        <Filter filter={filterValue} onChange={onFilterInputChange} /></HeaderContainer>
+      <ul>
+        {getContactsItems(contacts, filterValue)}
+      </ul>
+    </ListWrapper>
+  );
 }

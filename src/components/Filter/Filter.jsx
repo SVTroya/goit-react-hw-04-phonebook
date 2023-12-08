@@ -9,7 +9,7 @@ export function Filter({ filter, onChange }) {
       id={crypto.randomUUID()}
       value={filter}
       placeholder='Find conacts by name'
-      onChange={({ target: { name, value } }) => onChange(name, value)} />
+      onChange={({ target: { value } }) => onChange(value)} />
   );
 }
 
